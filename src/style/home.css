@@ -1,0 +1,23 @@
+@import "geral.css";
+.home {
+  max-width: 100%;
+}
+.home-title {
+  margin-left: 6rem;
+  display: inline-block;
+  color: white;
+  font-weight: 700;
+  margin: 2rem 6rem 2rem;
+  font-size: 2.5rem;
+}
+.home-container {
+  margin-left: 6rem;
+  display: flex;
+  position: relative;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-bottom: 200px;
+}
+.title .query-text {
+  color: #f7d354;
+}

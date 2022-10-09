@@ -1,0 +1,146 @@
+@import "geral.css";
+.filmes {
+  max-width: 100%;
+}
+.filmes-title {
+  margin-left: 6rem;
+  display: inline-block;
+  color: white;
+  font-weight: 700;
+  margin: 2rem 6rem 2rem;
+  font-size: 2rem;
+}
+.filmes-menu {
+  display: flex;
+  align-items: center;
+}
+.filmes-container {
+  margin-left: 6rem;
+  display: flex;
+  position: relative;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-bottom: 200px;
+}
+.filmes-container .carousel {
+  display: flex;
+  overflow-x: auto;
+}
+.carousel::-webkit-scrollbar,
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+.filmes-container .buttons {
+
+  align-items: center;
+  display: flex;
+  height: 95%;
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  z-index: 111;
+}
+.buttons .button-left,
+.buttons .button-right {
+  align-items: center;
+  background: #66656560;
+  border: none;
+  display: flex;
+  font-size: 40px;
+  font-weight: bolder;
+  height: 120px;
+  justify-content: center;
+  width: 50px;
+}
+.buttons .button-left:hover,
+.buttons .button-right:hover {
+  width: 60px;
+  transition: all .5s ease;
+  background: #3d3d3d;
+}
+
+.buttons .button-left {
+  border-radius: 0 50px 50px 0;
+  -moz-border-radius: 0 50px 50px 0;
+  -webkit-border-radius: 0 50px 50px 0;
+}
+
+.buttons .button-right {
+  border-radius: 50px 0 0 50px;
+  -moz-border-radius: 50px 0 0 50px;
+  -webkit-border-radius: 50px 0 0 50px;
+}
+.movie-card img {
+  filter: brightness(55%);
+}
+img {
+  border-radius: 20px;
+  width: 250px;
+  height: 375px;
+}
+.title .query-text {
+  color: #f7d354;
+}
+.movie-card {
+  height: 380px;
+  box-sizing: border-box;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.movie-card-Description {
+  border-radius: 25px;
+  padding: 0.5rem;
+  width: 200px;
+  font-size: 11px;
+  top: -100px;
+  margin-left: 0.5rem;
+  position: relative;
+}
+.container-wrap {
+  display: flex;
+  justify-content: center;
+}
+.filmes-container-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 65%;
+  justify-content: center;
+}
+
+.subMenu form {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 6rem;
+  margin-bottom: 3rem;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.busca {
+  display: flex;
+}
+.busca-input {
+  width: 65rem;
+}
+.subMenu {
+  display: flex;
+}
+.subMenu input {
+  padding: 0.2rem 0 0 0;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  font-size: 1.2rem;
+  color: #fff;
+}
+.subMenu form button {
+  background-color: transparent;
+  border: transparent;
+  margin-left: 5px;
+  border-radius: 4px;
+  color: #fff;
+  padding: 0.1rem;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}

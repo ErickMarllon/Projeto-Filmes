@@ -1,0 +1,29 @@
+.genres {
+  display: flex;
+  justify-content: center;
+  /* flex-direction: row; */
+  width: 550px;
+  height: 300px;
+  /* align-items: stretch; */
+}
+.genres ul {
+  display: flex;
+
+  flex-wrap: wrap;
+}
+.genres ul li {
+  width: 136px;
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15%;
+}
+
+.genres ul li button {
+  background-color: rgba(95, 95, 95, 0.473);
+  color: aliceblue;
+  font-size: 20px;
+  border-radius: 15%;
+  padding: 10px 20px;
+}
