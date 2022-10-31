@@ -4,9 +4,20 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import SerieCard from "../components/SerieCard";
 import Pagination from "../components/Pagination";
 import SerieGenres from "../components/SerieGenres";
-import "../style/filmes.css";
-import "../style/pagination.css";
 
+import {
+  NavigationGenresContainer,
+  NavigationGenresContent,
+} from "../style/MenuGenreStyle.jsx";
+import {
+  Title,
+  ContainerNoWrap,
+  ContainerWrap,
+  ContainWrap,
+  ContainNoWrap,
+  ButtonLeft,
+  ButtonRight,
+} from "../style/FilmesStyle.jsx";
 
 const api = import.meta.env.VITE_API;
 const apiKey = import.meta.env.VITE_API_KEY;
@@ -27,16 +38,21 @@ const Series = () => {
   }, []);
 
   const getTopRatedMoviess = async (url) => {
-    const res = await fetch(url);
-    const data = await res.json();
+    const results = await fetch(url);
+    const data = await results.json();
     setTopMoviess(data.results);
   };
 
   useEffect(() => {
     setTimeout(() => {
-      const topRatedUrl = `${api}/discover/tv?${apiKey}&sort_by=popularity.desc&air_date.gte=2022&page=${page}&timezone=America%2FNew_York&with_genres=${genres}&include_null_first_air_dates=false`;
+      const topRatedUrl = `${api}/discover/tv?${apiKey}&sort_by=popularity.desc&page=${page}&with_genres=${genres}`;
+      const topRatedUrl2 = `${api}/discover/tv?${apiKey}&sort_by=popularity.desc&page=${
+        page + 1
+      }&with_genres=${genres}`;
+      getTopRatedMovies2(topRatedUrl2);
+
       getTopRatedMovies(topRatedUrl);
-    }, 1000);
+    }, 500);
   }, [page, genres]);
 
   const getTopRatedMovies = async (url) => {
@@ -45,13 +61,6 @@ const Series = () => {
     setTopMovies(data.results);
     setTotalPage(data.total_pages);
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      const topRatedUrl2 = `${api}/discover/tv?${apiKey}&sort_by=popularity.desc&air_date.gte=2022&page=${page+1}&timezone=America%2FNew_York&with_genres=${genres}&include_null_first_air_dates=false`;
-      getTopRatedMovies2(topRatedUrl2);
-    }, 1000);
-  }, [page, genres]);
 
   const getTopRatedMovies2 = async (url) => {
     const results = await fetch(url);
@@ -67,52 +76,48 @@ const Series = () => {
     e.preventDefault();
     carousel.current.scrollLeft += carousel.current.offsetWidth / 2;
   };
+
   return (
     <div className="filmes">
-      <div className="filmes-melhor-avaliacao">
-        <h2 className="filmes-title">Lançamentos</h2>
-          <div className="filmes-container">
-        <div className="carousel" ref={carousel}>
-            {topMoviess.length > 0 &&
-              topMoviess.map((tv) => <SerieCard key={tv.id} tv={tv} />)}
-          </div>
-          <div className="buttons">
-            <button
-              className="button-left"
-              onClick={handleLeftClick}
-              alt="Scroll Left"
-            >
-              <BsChevronLeft />
-            </button>
+      <Title>Em Alta</Title>
+      <ContainerNoWrap>
+        <ContainNoWrap ref={carousel}>
+          {topMoviess.length > 0 &&
+            topMoviess.map((tv) => <SerieCard key={tv.id} tv={tv} />)}
+          <ButtonLeft
+            className="button-left"
+            onClick={handleLeftClick}
+            alt="Scroll Left"
+          >
+            <BsChevronLeft />
+          </ButtonLeft>
+          <ButtonRight onClick={handleRightClick} alt="Scroll Right">
+            <BsChevronRight />
+          </ButtonRight>
+        </ContainNoWrap>
+      </ContainerNoWrap>
+      <NavigationGenresContainer>
+        <NavigationGenresContent>
+          <h1>Séries</h1>
+          <SerieGenres
+            genresOffset={genres}
+            setgenresOffSet={setGenres}
+            setOffset={setPage}
+          />
+        </NavigationGenresContent>
+      </NavigationGenresContainer>
 
-            <button
-              className="button-right"
-              onClick={handleRightClick}
-              alt="Scroll Right"
-            >
-              <BsChevronRight />
-            </button>
-          </div>
-        </div>
-      </div>
-      <div>
-              <div className="sub-menu">
-        <SerieGenres genresOffset={genres} setgenresOffSet={setGenres} setOffset={setPage} />
-      </div>
-      </div>
-
-      <div className="container-wrap">
-        {/* <h2 className="title">Lançamentos</h2> */}
-        <div className="filmes-container-wrap">
+      <Title>Lançamentos</Title>
+      <ContainerWrap>
+        <ContainWrap>
           {topMovies.length > 0 &&
             topMovies.map((tv) => <SerieCard key={tv.id} tv={tv} />)}
           {topMovies2.length > 0 &&
             topMovies2.map((tv) => <SerieCard key={tv.id} tv={tv} />)}
-        </div>
-      </div>
-      <div className="pagination">
-        <Pagination total={totalPage} offset={page} setOffset={setPage} />
-      </div>
+        </ContainWrap>
+      </ContainerWrap>
+
+      <Pagination total={totalPage} offset={page} setOffset={setPage} />
     </div>
   );
 };

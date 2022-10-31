@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { GlobalStyle } from "./style/GlobalStyle";
 import App from "./App";
 import Home from "./pages/Home";
 import Filmes from "./pages/Filmes";
@@ -12,14 +12,14 @@ import Search from "./pages/Search";
 import Animes from "./pages/Animes";
 import Anime from "./pages/Anime";
 
-import "./style/main.css";
-
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
+      <GlobalStyle />
       <Routes>
         <Route element={<App />}>
           <Route path="/" element={<Home />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="movie/:id" element={<Movie />} />
           <Route path="Serie/:id" element={<Serie />} />
           <Route path="search" element={<Search />} />

@@ -1,94 +1,101 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { BsClockHistory, BsStar } from "react-icons/bs";
+
+import SerieCardPlay from "../components/SerieCardPlay";
 import {
-  BsGraphUp,
-  BsWallet2,
-  BsHourglassSplit,
-  BsFillFileEarmarkTextFill,
-} from "react-icons/bs";
+  MoviePageStyled,
+  MovieDescriptionStyled,
+  MovieContainerStyled,
+  CardStyled,
+  CardContainerStyled,
+  TitleStyled,
+  AssetsStyled,
+  BackdropContainerStyled,
+  BackdropFilterStyled,
+  BackdropStyled,
+  PlayContainer,
+  MoviePlay,
+} from "../style/MovieCardStyle";
 
-import MovieCard from "../components/MovieCard";
-import MovieCardPlay from "../components/MovieCardPlay";
-
-import "../style/Movie.css";
-
-const api = import.meta.env.VITE_API;
+const imagesURL = import.meta.env.VITE_IMG;
+const moviesURLS = import.meta.env.VITE_API_SS;
 const apiKey = import.meta.env.VITE_API_KEY;
-const Movie = () => {
+
+const Serie = () => {
   const { id } = useParams();
-  const [movie, setMovie] = useState(null);
+  const [tv, setSerie] = useState(null);
 
   useEffect(() => {
-    const movieUrl = `${api}/discover/movie?${apiKey}&page=${page}`;
-    getMovie(movieUrl);
+    const serieUrl = `${moviesURLS}/tv/${id}?${apiKey}`;
+    getTV(serieUrl);
   }, []);
-  
-  const getMovie = async (url) => {
-    const res = await fetch(url);
-    const data = await res.json();
-    setMovie(data);
+
+  const getTV = async (url) => {
+    const results = await fetch(url);
+    const data = await results.json();
+    setSerie(data);
   };
 
   const formatCurrency = (number) => {
-    return number.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
+    return number.substr(0, 4);
+  };
+
+  const converter = (minutos) => {
+    const horas = Math.floor(minutos / 60);
+    const min = minutos % 60;
+    const textoHoras = `${horas}`.slice(-2);
+    const textoMinutos = `00${min}`.slice(-2);
+
+    return `${textoHoras}h ${textoMinutos}m`;
   };
 
   return (
-    <div className="movie-page">
-      <div className="movie-page-info">
-        {movie && (
+    <MoviePageStyled>
+      <MovieContainerStyled>
+        {tv && (
           <>
-            <div className="movie-info">
-              <MovieCard movie={movie} showLink={true} />
-              <div className="descriptions">
-                <p className="tagline">{movie.tagline}</p>
-                <div className="info"></div>
+            <MovieDescriptionStyled>
+              <CardStyled>
+                <img src={imagesURL + tv.poster_path} alt={tv.title} />
+              </CardStyled>
+              <CardContainerStyled>
+                <TitleStyled>{tv.title}</TitleStyled>
+                <AssetsStyled>
+                  <p>{formatCurrency(tv.first_air_date)}</p>
+                  <p>
+                    <BsClockHistory />
+                    {converter(tv.episode_run_time)}
+                  </p>
+                  <p>
+                    <BsStar />
+                    {tv.vote_average.toFixed(1)}
+                  </p>
+                </AssetsStyled>
+                <p>{tv.overview}</p>
+              </CardContainerStyled>
+            </MovieDescriptionStyled>
 
-                <h3>
-                  <BsWallet2 /> Orçamento:
-                </h3>
-                <p>{formatCurrency(movie.budget)}</p>
-              </div>
-              <div className="info">
-                <h3>
-                  <BsGraphUp /> Receita:
-                </h3>
-                <p>{movie.backdrop_path}</p>
-              </div>
-              <div className="info">
-                <h3>
-                  <BsHourglassSplit /> Duração:
-                </h3>
-                <p>{movie.runtime} minutos</p>
-              </div>
-              <div className="info description">
-                <h3>
-                  <BsFillFileEarmarkTextFill /> Descrição:
-                </h3>
-                <p>{movie.overview}</p>
-              </div>
-            </div>
-            <div className="backdrop"></div>
-            <div
-              className="f"
-              style={{
-                backgroundImage: `url("https://image.tmdb.org/t/p/w500/${movie.backdrop_path}")`,
-              }}
-            ></div>
+            <BackdropContainerStyled>
+              <BackdropFilterStyled />
 
-            <div className="movie-play-fundo">
-              <div className="movie-play">
-                <MovieCardPlay movie={movie} showLink={false} />
-              </div>
-            </div>
+              <BackdropStyled
+                style={{
+                  backgroundImage: `url("https://image.tmdb.org/t/p/w1280/${tv.backdrop_path}")`,
+                }}
+              ></BackdropStyled>
+            </BackdropContainerStyled>
+
+            <PlayContainer>
+              <MoviePlay>
+                <SerieCardPlay tv={tv} showLink={false} />
+              </MoviePlay>
+            </PlayContainer>
           </>
         )}
-      </div>
-    </div>
+      </MovieContainerStyled>
+    </MoviePageStyled>
   );
 };
 
-export default Movie;
+export default Serie;

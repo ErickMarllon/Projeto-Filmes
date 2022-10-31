@@ -3,8 +3,13 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import MovieCard from "../components/MovieCard";
 import SerieCard from "../components/SerieCard";
 
-import "../style/filmes.css";
-
+import {
+  Title,
+  ContainerNoWrap,
+  ContainNoWrap,
+  ButtonLeft,
+  ButtonRight,
+} from "../style/FilmesStyle.jsx";
 const moviesURL = import.meta.env.VITE_API;
 const apiKey = import.meta.env.VITE_API_KEY;
 const moviesURL_S = import.meta.env.VITE_API_SS;
@@ -17,11 +22,13 @@ const Home = () => {
   useEffect(() => {
     const topRatedUrls = `${moviesURL}/discover/movie?${apiKey}`;
     getTopRatedMovies(topRatedUrls);
+
+    
   }, []);
 
   const getTopRatedMovies = async (url) => {
-    const res = await fetch(url);
-    const data = await res.json();
+    const results = await fetch(url);
+    const data = await results.json();
     setTopMovies(data.results);
   };
 
@@ -29,11 +36,13 @@ const Home = () => {
     const topRatedUrls = `${moviesURL_S}/discover/tv?${apiKey}`;
     getTopRatedMoviess(topRatedUrls);
   }, []);
+
   const getTopRatedMoviess = async (url) => {
-    const res = await fetch(url);
-    const data = await res.json();
+    const results = await fetch(url);
+    const data = await results.json();
     setTopMoviess(data.results);
   };
+
   const handleLeftClick = (e) => {
     e.preventDefault();
     carousel.current.scrollLeft -= carousel.current.offsetWidth / 2;
@@ -41,7 +50,7 @@ const Home = () => {
 
   const handleRightClick = (e) => {
     e.preventDefault();
-    carousel.current.scrollLeft += carousel.current.offsetWidth / 2;
+    carousel.current.scrollLeft += carousel.current.offsetWidth * 2;
   };
   const handleLeftClickS = (e) => {
     e.preventDefault();
@@ -50,67 +59,48 @@ const Home = () => {
 
   const handleRightClickS = (e) => {
     e.preventDefault();
-    carouselS.current.scrollLeft += carouselS.current.offsetWidth / 2;
+    carouselS.current.scrollLeft += carouselS.current.offsetWidth * 2;
   };
 
   return (
     <div className="filmes">
-      <div className="home-melhor-avaliacao">
-        <h2 className="filmes-title">Filmes</h2>
-        <div className="filmes-container">
-          <div className="carousel" ref={carousel}>
-            {topMovies.length > 0 &&
-              topMovies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            <div className="buttons">
-              <button
-                className="button-left"
-                onClick={handleLeftClick}
-                alt="Scroll Left"
-              >
-                <BsChevronLeft />
-              </button>
+      <Title>Filmes</Title>
+      <ContainerNoWrap>
+        <ContainNoWrap ref={carousel}>
+          {topMovies.length > 0 &&
+            topMovies.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
+          <ButtonLeft
+            className="button-left"
+            onClick={handleLeftClick}
+            alt="Scroll Left"
+          >
+            <BsChevronLeft />
+          </ButtonLeft>
+          <ButtonRight onClick={handleRightClick} alt="Scroll Right">
+            <BsChevronRight />
+          </ButtonRight>
+        </ContainNoWrap>
+      </ContainerNoWrap>
 
-              <button
-                className="button-right"
-                onClick={handleRightClick}
-                alt="Scroll Right"
-              >
-                <BsChevronRight />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="filmes">
-        <h2 className="filmes-title">Séries</h2>
-        <div className="filmes-container">
-          <div className="carousel" ref={carouselS}>
-            {topMoviess.length > 0 &&
-              topMoviess.map((tv) => <SerieCard key={tv.id} tv={tv} />
-              )}
-            <div className="buttons">
-              <button
-                className="button-left"
-                onClick={handleLeftClickS}
-                alt="Scroll Left"
-              >
-                <BsChevronLeft />
-              </button>
-
-              <button
-                className="button-right"
-                onClick={handleRightClickS}
-                alt="Scroll Right"
-              >
-                <BsChevronRight />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Title>Séries</Title>
+      <ContainerNoWrap>
+        <ContainNoWrap ref={carouselS}>
+          {topMoviess.length > 0 &&
+            topMoviess.map((tv) => <SerieCard key={tv.id} tv={tv} />)}
+          <ButtonLeft
+            className="button-left"
+            onClick={handleLeftClickS}
+            alt="Scroll Left"
+          >
+            <BsChevronLeft />
+          </ButtonLeft>
+          <ButtonRight onClick={handleRightClickS} alt="Scroll Right">
+            <BsChevronRight />
+          </ButtonRight>
+        </ContainNoWrap>
+      </ContainerNoWrap>
     </div>
   );
 };

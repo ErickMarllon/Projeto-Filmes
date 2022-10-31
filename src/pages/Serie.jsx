@@ -3,8 +3,21 @@ import { useParams } from "react-router-dom";
 import { BsClockHistory, BsStar } from "react-icons/bs";
 
 import SerieCardPlay from "../components/SerieCardPlay";
+import {
+  MoviePageStyled,
+  MovieDescriptionStyled,
+  MovieContainerStyled,
+  CardStyled,
+  CardContainerStyled,
+  TitleStyled,
+  AssetsStyled,
+  BackdropContainerStyled,
+  BackdropFilterStyled,
+  BackdropStyled,
+  PlayContainer,
+  MoviePlay,
+} from "../style/MovieCardStyle";
 
-import "../style/Movie.css";
 const imagesURL = import.meta.env.VITE_IMG;
 const moviesURLS = import.meta.env.VITE_API_SS;
 const apiKey = import.meta.env.VITE_API_KEY;
@@ -19,8 +32,8 @@ const Serie = () => {
   }, []);
 
   const getTV = async (url) => {
-    const res = await fetch(url);
-    const data = await res.json();
+    const results = await fetch(url);
+    const data = await results.json();
     setSerie(data);
   };
 
@@ -28,63 +41,60 @@ const Serie = () => {
     return number.substr(0, 4);
   };
 
+  const converter = (minutos) => {
+    const horas = Math.floor(minutos / 60);
+    const min = minutos % 60;
+    const textoHoras = `${horas}`.slice(-2);
+    const textoMinutos = `00${min}`.slice(-2);
+
+    return `${textoHoras}h ${textoMinutos}m`;
+  };
+
   return (
-    <div className="movie-page">
-      <div className="movie-page-info">
+    <MoviePageStyled>
+      <MovieContainerStyled>
         {tv && (
           <>
-            <div className="movie-info">
-              <div className="movie-info-card">
+            <MovieDescriptionStyled>
+              <CardStyled>
                 <img src={imagesURL + tv.poster_path} alt={tv.title} />
-              </div>
-              <div className="descriptions">
-                <div className="info">
-                  <p className="tagline">Assistir {tv.title} online</p>
-                </div>
-                <div className="descriptions-title">
-                  <p className="tagline">{tv.title}</p>
-                </div>
-                <div className="descriptions-info">
-                  <div className="info">
-                    <p>{formatCurrency(tv.first_air_date)}</p>
-                  </div>
-                  <div className="info">
-                    <p>
-                      <BsClockHistory />
-                      {tv.episode_run_time} minutos
-                    </p>
-                  </div>
-                  <div className="info">
-                    <p>
-                      <BsStar />
-                      {tv.vote_average}
-                    </p>
-                  </div>
-                </div>
-                <div className="info description">
-                  <p>{tv.overview}</p>
-                </div>
-              </div>
-            </div>
-            <div className="backdrop">
-              <div className="ff"></div>
-              <div
-                className="f"
+              </CardStyled>
+              <CardContainerStyled>
+                <TitleStyled>{tv.name}</TitleStyled>
+                <AssetsStyled>
+                  <p>{formatCurrency(tv.first_air_date)}</p>
+                  <p>
+                    <BsClockHistory />
+                    {converter(tv.episode_run_time)}
+                  </p>
+                  <p>
+                    <BsStar />
+                    {tv.vote_average.toFixed(1)}
+                  </p>
+                </AssetsStyled>
+                <p>{tv.overview}</p>
+              </CardContainerStyled>
+            </MovieDescriptionStyled>
+
+            <BackdropContainerStyled>
+              <BackdropFilterStyled />
+
+              <BackdropStyled
                 style={{
                   backgroundImage: `url("https://image.tmdb.org/t/p/w1280/${tv.backdrop_path}")`,
                 }}
-              ></div>
-            </div>
+              ></BackdropStyled>
+            </BackdropContainerStyled>
 
-            <div className="movie-play-fundo">
-              <div className="movie-play">
+            <PlayContainer>
+              <MoviePlay>
                 <SerieCardPlay tv={tv} showLink={false} />
-              </div>
-            </div>
+              </MoviePlay>
+            </PlayContainer>
           </>
         )}
-      </div>
-    </div>
+      </MovieContainerStyled>
+    </MoviePageStyled>
   );
 };
 
