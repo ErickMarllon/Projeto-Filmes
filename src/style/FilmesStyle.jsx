@@ -48,6 +48,7 @@ export const ButtonLeft = styled.button`
   font-size: 40px;
   font-weight: bolder;
   height: 120px;
+  user-select:none;
   justify-content: center;
   width: 50px;
   ${Media.mobile`
@@ -67,6 +68,7 @@ export const ButtonLeft = styled.button`
 export const ButtonRight = styled.div`
   align-items: center;
   cursor: pointer;
+  user-select: none;
   background: #66656560;
   border: none;
   display: flex;
