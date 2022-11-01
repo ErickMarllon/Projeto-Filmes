@@ -9,7 +9,7 @@ export const MoviePageStyled = styled.div`
   position: relative;
 `;
 export const MovieDescriptionStyled = styled.div`
-  margin: 15rem 0rem 3rem 3rem;
+  margin: 15rem 0rem 15rem 3rem;
   display: flex;
   z-index: 15;
   width: 70%;
@@ -17,7 +17,10 @@ export const MovieDescriptionStyled = styled.div`
   ${Media.tablet`
   width: 70%;
   flex-direction: column;
-  margin: 10rem 0rem 10rem 3rem;
+
+  `}
+  ${Media.mobile`
+  margin: 20rem 0rem 15em 3rem;
   `}
 `;
 
@@ -41,7 +44,7 @@ export const CardStyled = styled.div`
     height: 375px;
     border-radius: 20px;
   }
-  ${Media.tablet`
+  ${Media.mobile`
   img {
   display:none;
   }
@@ -57,13 +60,17 @@ export const CardContainerStyled = styled.div`
 
   ${Media.tablet`
   height: 200px;
+  justify-content: space-around
   `}
   p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin: 1rem 0;
+    ${Media.tablet`
+    font-size: 1rem;
+    `}
   }
   ${Media.tablet`
-  justify-content: space-around
+  
   `}
 `;
 export const TitleStyled = styled.h1`
@@ -71,6 +78,7 @@ export const TitleStyled = styled.h1`
   ${Media.tablet`
   font-size: 1rem;
   `}
+  
 `;
 export const AssetsStyled = styled.div`
   display: flex;
