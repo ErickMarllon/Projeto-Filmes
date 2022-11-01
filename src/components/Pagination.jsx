@@ -17,7 +17,7 @@ const Pagination = ({ total, offset, setOffset }) => {
   const first = Math.min(Math.max(offset - MAX_LEFT, 1), maxFirst);
   function onPageChange(page) {
     setOffset(page);
-    setMode(!active);
+
   }
 
   return (
