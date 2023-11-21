@@ -63,7 +63,7 @@ const Home = () => {
             topMovies.map((movie) => (
               <Card
                 key={movie.id}
-                type={'movie'}
+                type={'filme'}
                 keyId={movie.id}
                 image={movie.poster_path}
                 Title={movie.title ? movie.title : movie.name}
