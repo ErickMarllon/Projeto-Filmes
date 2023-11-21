@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Media } from "./Media";
+import styled from 'styled-components';
+import { Media } from '../../components/MediaQuery/MediaQuery';
 
 export const Title = styled.div`
   margin-left: 3rem;
@@ -48,7 +48,7 @@ export const ButtonLeft = styled.button`
   font-size: 40px;
   font-weight: bolder;
   height: 120px;
-  user-select:none;
+  user-select: none;
   justify-content: center;
   width: 50px;
   ${Media.mobile`
@@ -93,4 +93,39 @@ export const ButtonRight = styled.div`
     transition: all 0.5s ease;
     background: #3d3d3d;
   }
+`;
+export const NavigationGenresContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid #5e5e5e3b;
+  border-width: 1px 0 1px 0;
+  margin-top: 1.2rem;
+  background: #000;
+  position: block;
+  padding: 2rem 0;
+  ${Media.tablet`
+  padding: 1rem;
+ `}
+  h1 {
+    margin-right: 1.25rem;
+    ${Media.mobile`
+    font-size: 1.5rem; 
+   `}
+  }
+`;
+
+export const NavigationGenresContent = styled.div`
+  width: 100%;
+  display: flex;
+  margin-left: 3rem;
+  justify-content: flex-start;
+  align-items: center;
+  height: 30px;
+  box-sizing: border-box;
+  margin-right: 1.25rem;
+  ${Media.mobile`
+  margin-left: 1rem;
+ `}
 `;

@@ -1,13 +1,12 @@
-import React from "react";
-
+import React from 'react';
 
 import {
-  PaginationContainer,
-  PaginationContain,
   Button,
-} from "../style/PaginationStyle.jsx";
+  PaginationContain,
+  PaginationContainer,
+} from './PaginationStyle.jsx';
 
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 const MAX_ITEMS = 5;
 const MAX_LEFT = (MAX_ITEMS - 1) / 2;
 const limit = 100;
@@ -17,7 +16,6 @@ const Pagination = ({ total, offset, setOffset }) => {
   const first = Math.min(Math.max(offset - MAX_LEFT, 1), maxFirst);
   function onPageChange(page) {
     setOffset(page);
-
   }
 
   return (
@@ -38,7 +36,7 @@ const Pagination = ({ total, offset, setOffset }) => {
               <li key={page}>
                 <Button
                   onClick={() => onPageChange(page)}
-                  active={page === offset ? "active" : null}
+                  active={page === offset && true}
                 >
                   {page}
                 </Button>

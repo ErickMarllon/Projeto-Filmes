@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { BiSearchAlt2 } from "react-icons/bi";
+import { useState } from 'react';
+import { BiSearchAlt2 } from 'react-icons/bi';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
-  HeaderStyled,
-  HamburguerStyled,
-  SpanStyled,
-  MobileFormStyled,
-  InputStyled,
   FormButton,
+  HamburguerStyled,
+  HeaderStyled,
+  InputStyled,
   MenuStyled,
-} from "../style/HeaderStyle.jsx";
+  MobileFormStyled,
+  SpanStyled,
+} from './HeaderStyle.jsx';
 
 const Header = () => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const navigate = useNavigate();
   const [active, setMode] = useState(false);
   const ToggleMode = () => {
@@ -22,36 +22,36 @@ const Header = () => {
     e.preventDefault();
     if (!search) return;
     navigate(`/search?q=${search}`, { replace: true });
-    setSearch("");
+    setSearch('');
   };
 
   return (
     <HeaderStyled>
       <HamburguerStyled onClick={ToggleMode}>
-        <SpanStyled active={active !== false ? active: null} />
+        <SpanStyled active={active} />
       </HamburguerStyled>
 
-      <MenuStyled active={active !== false ? active: null}>
+      <MenuStyled active={active}>
         <ul>
           <li>
-            <NavLink to="Home" aria-current="Home" onClick={ToggleMode}>
+            <NavLink to='home' aria-current='Home' onClick={ToggleMode}>
               Home
             </NavLink>
           </li>
 
           <li>
-            <NavLink to="Filmes" aria-current="Home" onClick={ToggleMode}>
+            <NavLink to='filmes' aria-current='Home' onClick={ToggleMode}>
               Filmes
             </NavLink>
           </li>
 
           <li>
-            <NavLink to="Series" aria-current="Series" onClick={ToggleMode}>
+            <NavLink to='series' aria-current='Series' onClick={ToggleMode}>
               Serie
             </NavLink>
           </li>
           <li>
-            <NavLink to="Animes" aria-current="Animes" onClick={ToggleMode}>
+            <NavLink to='animes' aria-current='Animes' onClick={ToggleMode}>
               Animes
             </NavLink>
           </li>
@@ -59,12 +59,12 @@ const Header = () => {
       </MenuStyled>
       <MobileFormStyled onSubmit={handleSubmit}>
         <InputStyled
-          type="text"
-          placeholder="Busque um filme"
+          type='text'
+          placeholder='Busque um filme'
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
-        <FormButton type="submit">
+        <FormButton type='submit'>
           <BiSearchAlt2 />
         </FormButton>
       </MobileFormStyled>

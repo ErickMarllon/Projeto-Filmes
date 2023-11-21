@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Media } from "./Media";
+import styled from 'styled-components';
+import { Media } from '../MediaQuery/MediaQuery';
 
 export const FooterContainer = styled.div`
   font-weight: normal;
@@ -53,7 +53,7 @@ export const FooterContent = styled.div`
     list-style: none;
   }
   ul li + li::before {
-    content: "-";
+    content: '-';
     margin: 10px;
   }
 `;

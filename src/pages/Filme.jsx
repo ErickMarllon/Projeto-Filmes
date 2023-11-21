@@ -1,28 +1,25 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { BsClockHistory, BsStar } from "react-icons/bs";
-import React, { Component } from "react";
-import MovieCardPlay from "../components/MovieCardPlay";
+import React, { useEffect, useState } from 'react';
+import { BsClockHistory, BsStar } from 'react-icons/bs';
+import { useParams } from 'react-router-dom';
+import CardPlay from '../components/CardPlay/CardPlay';
 import {
-  MoviePageStyled,
-  MovieDescriptionStyled,
-  MovieContainerStyled,
-  CardStyled,
-  CardContainerStyled,
-  TitleStyled,
   AssetsStyled,
   BackdropContainerStyled,
   BackdropFilterStyled,
   BackdropStyled,
-  PlayContainer,
-  MoviePlay,
-} from "../style/MovieCardStyle";
+  CardContainerStyled,
+  CardStyled,
+  MovieContainerStyled,
+  MovieDescriptionStyled,
+  MoviePageStyled,
+  TitleStyled,
+} from './CommonStyles/MovieCardStyle';
 
 const imagesURL = import.meta.env.VITE_IMG;
 const moviesURL = import.meta.env.VITE_API_SS;
 const apiKey = import.meta.env.VITE_API_KEY;
 
-const Movie = () => {
+const Filme = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
 
@@ -59,6 +56,7 @@ const Movie = () => {
                 <img src={imagesURL + movie.poster_path} alt={movie.title} />
               </CardStyled>
               <CardContainerStyled>
+                <h1>{movie.with_companies}</h1>
                 <TitleStyled>{movie.title}</TitleStyled>
                 <AssetsStyled>
                   <p>{formatYear(movie.release_date)}</p>
@@ -85,11 +83,7 @@ const Movie = () => {
               ></BackdropStyled>
             </BackdropContainerStyled>
 
-            <PlayContainer>
-              <MoviePlay>
-                <MovieCardPlay movie={movie} />
-              </MoviePlay>
-            </PlayContainer>
+            <CardPlay keyId={movie.id} type={'Movie'} />
           </>
         )}
       </MovieContainerStyled>
@@ -97,4 +91,4 @@ const Movie = () => {
   );
 };
 
-export default Movie;
+export default Filme;

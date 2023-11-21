@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Media } from "./Media";
+import styled from 'styled-components';
+import { Media } from '../MediaQuery/MediaQuery';
 
 export const PaginationContainer = styled.div`
   display: flex;
@@ -35,18 +35,19 @@ export const PaginationContain = styled.div`
 `;
 
 export const Button = styled.button`
-cursor: pointer;
-border: ${({ active }) => (active ? "2px solid #977006" : "2px solid #fff")};
-color: ${({ active }) => (active ? " #b8b8b8" : "#fff")};
-background: none;
-display: flex;
-font-size: 1rem;
-padding: 0.5rem;
-border-radius: 1em;
+  cursor: pointer;
+  border: ${({ active }) => (active ? '2px solid #977006' : '2px solid #fff')};
+  color: ${({ active }) => (active ? ' #b8b8b8' : '#fff')};
+  background: none;
+  display: flex;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 1em;
 
-${Media.mobile`
+  ${Media.mobile`
 font-size: .8rem;
 `}
-button svg {
-  color: #ffffff;
+  button svg {
+    color: #ffffff;
+  }
 `;

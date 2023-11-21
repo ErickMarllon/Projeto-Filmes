@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Media } from "./Media";
+import styled from 'styled-components';
+import { Media } from '../MediaQuery/MediaQuery';
 
 export const HeaderStyled = styled.div`
   height: 130px;
@@ -44,7 +44,7 @@ export const HamburguerStyled = styled.div`
 
 export const SpanStyled = styled.span`
   & {
-    content: "";
+    content: '';
     background: rgb(255, 255, 255);
     position: absolute;
     height: 6px;
@@ -52,21 +52,21 @@ export const SpanStyled = styled.span`
     width: 45px;
     border-radius: 5px;
     transition: 0.3s;
-    transform: ${({ active }) => (active ? "rotate(45deg)" : "none")};
+    transform: ${({ active }) => (active ? 'rotate(45deg)' : 'none')};
     ${Media.tablet`
     height: 5px;
     width: 35px;
     `}
   }
   &:after {
-    content: "";
+    content: '';
     background: rgb(255, 255, 255);
     position: absolute;
     height: 6px;
     width: 45px;
     border-radius: 5px;
     margin-top: -15px;
-    opacity: ${({ active }) => (active ? "0" : "none")};
+    opacity: ${({ active }) => (active ? '0' : 'none')};
     ${Media.tablet`
     height: 5px;
     margin-top: -12px;
@@ -75,7 +75,7 @@ export const SpanStyled = styled.span`
   }
 
   &:before {
-    content: "";
+    content: '';
     background: rgb(255, 255, 255);
     position: absolute;
     height: 6px;
@@ -83,13 +83,13 @@ export const SpanStyled = styled.span`
     width: 45px;
     margin-top: 15px;
     transition: 0.3s;
-    transform: ${({ active }) => (active ? "rotate(90deg)" : "none")};
-    top: ${({ active }) => (active ? "-14px" : "none")};
+    transform: ${({ active }) => (active ? 'rotate(90deg)' : 'none')};
+    top: ${({ active }) => (active ? '-14px' : 'none')};
     ${Media.tablet`
     height: 5px;
     margin-top: 12px;
     width: 35px;
-    top: ${({ active }) => (active ? "-12px" : "none")};
+    top: ${({ active }) => (active ? '-12px' : 'none')};
     `}
   }
 `;
@@ -109,7 +109,7 @@ export const MenuStyled = styled.div`
     `}
   }
   ul li {
-  top: 0;
+    top: 0;
 
     list-style: none;
     ${Media.tablet`
@@ -121,10 +121,9 @@ export const MenuStyled = styled.div`
     `}
   }
   ul li:hover {
-
     ${Media.tablet`
     background: rgba(41, 0, 95, 0.171);
-      `} 
+      `}
   }
   a {
     color: #b8b8b8;
@@ -138,19 +137,17 @@ export const MenuStyled = styled.div`
       justify-content: center;
     `}
 
-
-    &:hover{
+    &:hover {
       color: #ffffff;
       transition: all 0.2s ease-in;
     }
-    
+
     &.active {
       color: #fff;
-      border-bottom: #fff solid 5px; 
+      border-bottom: #fff solid 5px;
       border-radius: 5px;
     }
   }
-
 
   ${Media.tablet`
   background: linear-gradient(#000 60%, transparent);
@@ -160,9 +157,9 @@ export const MenuStyled = styled.div`
   top: -45px;
   width: 100%;
   height: 100vh;
-  display: ${({ active }) => (active ? "block" : "none")};  
+  display: ${({ active }) => (active ? 'block' : 'none')};  
 `}
-${Media.mobileP`
+  ${Media.mobileP`
 background: linear-gradient(#000 80%, transparent);
 `}
 `;

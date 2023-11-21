@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Media } from "./Media";
+import styled from 'styled-components';
+import { Media } from '../MediaQuery/MediaQuery';
 
 export const MoviePageStyled = styled.div`
   color: #fff;
@@ -78,7 +78,6 @@ export const TitleStyled = styled.h1`
   ${Media.tablet`
   font-size: 1rem;
   `}
-  
 `;
 export const AssetsStyled = styled.div`
   display: flex;
@@ -145,7 +144,7 @@ export const MoviePlay = styled.div`
   background: rgba(15, 15, 15, 0.3);
   border-radius: 25px;
   z-index: 111;
-  height: 40rem;
+  height: 35rem;
   width: 80%;
   display: flex;
   align-items: center;
@@ -179,7 +178,7 @@ export const Play = styled.div`
   align-items: center;
   justify-content: center;
   display: flex;
-  height: 36rem;
+  height: 80%;
   box-shadow: rgba(107, 187, 221, 0.12) 0px 0px 4px 0px,
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 `;

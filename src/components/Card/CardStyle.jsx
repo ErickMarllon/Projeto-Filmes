@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Media } from "./Media";
+import styled from 'styled-components';
+import { Media } from '../MediaQuery/MediaQuery';
 
 export const CardStyle = styled.div`
   height: 380px;

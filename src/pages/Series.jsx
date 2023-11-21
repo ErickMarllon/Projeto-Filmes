@@ -1,72 +1,68 @@
-import { useEffect, useState, useRef } from "react";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { useEffect, useRef, useState } from 'react';
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
-import SerieCard from "../components/SerieCard";
-import Pagination from "../components/Pagination";
-import SerieGenres from "../components/SerieGenres";
+import Pagination from '../components/Pagination/Pagination.jsx';
 
+import Card from '../components/Card/Card.jsx';
+import Genres from '../components/Genres/Genres.jsx';
 import {
-  NavigationGenresContainer,
-  NavigationGenresContent,
-} from "../style/MenuGenreStyle.jsx";
-import {
-  Title,
-  ContainerNoWrap,
-  ContainerWrap,
-  ContainWrap,
-  ContainNoWrap,
   ButtonLeft,
   ButtonRight,
-} from "../style/FilmesStyle.jsx";
+  ContainNoWrap,
+  ContainWrap,
+  ContainerNoWrap,
+  ContainerWrap,
+  NavigationGenresContainer,
+  NavigationGenresContent,
+  Title,
+} from './CommonStyles/FilmesStyle.jsx';
 
 const api = import.meta.env.VITE_API;
 const apiKey = import.meta.env.VITE_API_KEY;
 
 const Series = () => {
   const [topMovies, setTopMovies] = useState([]);
-  const [topMoviess, setTopMoviess] = useState([]);
-  const [topMovies2, setTopMovies2] = useState([]);
+  const [topMoviesCarousel, setTopMoviesCarousel] = useState([]);
   const [page, setPage] = useState(1);
+  console.log('🚀 ~ file: Series.jsx:29 ~ Series ~ page:', page);
   const [genres, setGenres] = useState();
   const [totalPage, setTotalPage] = useState();
-  const carousel = useRef("");
-  useEffect(() => {
-    setTimeout(() => {
-      const topRatedUrls = `${api}/discover/tv?${apiKey}&page=1`;
-      getTopRatedMoviess(topRatedUrls);
-    }, 1000);
-  }, []);
-
-  const getTopRatedMoviess = async (url) => {
-    const results = await fetch(url);
-    const data = await results.json();
-    setTopMoviess(data.results);
-  };
+  const carousel = useRef('');
 
   useEffect(() => {
-    setTimeout(() => {
-      const topRatedUrl = `${api}/discover/tv?${apiKey}&sort_by=popularity.desc&page=${page}&with_genres=${genres}`;
-      const topRatedUrl2 = `${api}/discover/tv?${apiKey}&sort_by=popularity.desc&page=${
-        page + 1
-      }&with_genres=${genres}`;
-      getTopRatedMovies2(topRatedUrl2);
+    const getTopRatedMovies = async () => {
+      try {
+        const responseTV = await fetch(
+          `${api}/discover/tv?${apiKey}&sort_by=popularity.desc&page=${page}&with_genres=${genres}`
+        );
 
-      getTopRatedMovies(topRatedUrl);
-    }, 500);
+        const responseTV2 = await fetch(
+          `${api}/discover/tv?${apiKey}&sort_by=popularity.desc&page=${
+            page + 1
+          }&with_genres=${genres}`
+        );
+
+        const responseTvCarousel = await fetch(`${api}/discover/tv?${apiKey}`);
+
+        if (!responseTV.ok || !responseTV2.ok || !responseTvCarousel.ok) {
+          throw new Error('Failed to fetch');
+        }
+
+        const dataTV = await responseTV.json();
+        const dataTV2 = await responseTV2.json();
+        const dataTvCarousel = await responseTvCarousel.json();
+
+        setTopMovies([...dataTV.results, ...dataTV2.results]);
+        setTopMoviesCarousel(dataTvCarousel.results);
+        setTotalPage(dataTV.total_pages);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    getTopRatedMovies();
   }, [page, genres]);
 
-  const getTopRatedMovies = async (url) => {
-    const results = await fetch(url);
-    const data = await results.json();
-    setTopMovies(data.results);
-    setTotalPage(data.total_pages);
-  };
-
-  const getTopRatedMovies2 = async (url) => {
-    const results = await fetch(url);
-    const data = await results.json();
-    setTopMovies2(data.results);
-  };
   const handleLeftClick = (e) => {
     e.preventDefault();
     carousel.current.scrollLeft -= carousel.current.offsetWidth / 2;
@@ -78,20 +74,28 @@ const Series = () => {
   };
 
   return (
-    <div className="filmes">
+    <div className='filmes'>
       <Title>Em Alta</Title>
       <ContainerNoWrap>
         <ContainNoWrap ref={carousel}>
-          {topMoviess.length > 0 &&
-            topMoviess.map((tv) => <SerieCard key={tv.id} tv={tv} />)}
+          {topMoviesCarousel.length > 0 &&
+            topMoviesCarousel.map((tv) => (
+              <Card
+                key={tv.id}
+                keyId={tv.id}
+                type={'Serie'}
+                image={tv.poster_path}
+                Title={tv.title ? tv.title : tv.name}
+              />
+            ))}
           <ButtonLeft
-            className="button-left"
+            className='button-left'
             onClick={handleLeftClick}
-            alt="Scroll Left"
+            alt='Scroll Left'
           >
             <BsChevronLeft />
           </ButtonLeft>
-          <ButtonRight onClick={handleRightClick} alt="Scroll Right">
+          <ButtonRight onClick={handleRightClick} alt='Scroll Right'>
             <BsChevronRight />
           </ButtonRight>
         </ContainNoWrap>
@@ -99,10 +103,11 @@ const Series = () => {
       <NavigationGenresContainer>
         <NavigationGenresContent>
           <h1>Séries</h1>
-          <SerieGenres
+          <Genres
             genresOffset={genres}
             setgenresOffSet={setGenres}
             setOffset={setPage}
+            type={'series'}
           />
         </NavigationGenresContent>
       </NavigationGenresContainer>
@@ -111,9 +116,15 @@ const Series = () => {
       <ContainerWrap>
         <ContainWrap>
           {topMovies.length > 0 &&
-            topMovies.map((tv) => <SerieCard key={tv.id} tv={tv} />)}
-          {topMovies2.length > 0 &&
-            topMovies2.map((tv) => <SerieCard key={tv.id} tv={tv} />)}
+            topMovies.map((tv) => (
+              <Card
+                key={tv.id}
+                keyId={tv.id}
+                image={tv.poster_path}
+                Title={tv.title ? tv.title : tv.name}
+                type={'Serie'}
+              />
+            ))}
         </ContainWrap>
       </ContainerWrap>
 

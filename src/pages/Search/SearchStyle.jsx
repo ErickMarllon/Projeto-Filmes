@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Media } from "./Media";
+import styled from 'styled-components';
+import { Media } from '../../components/MediaQuery/MediaQuery';
 
 export const SearchContainer = styled.div`
   display: flex;

@@ -1,22 +1,20 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { BsClockHistory, BsStar } from "react-icons/bs";
+import { useEffect, useState } from 'react';
+import { BsClockHistory, BsStar } from 'react-icons/bs';
+import { useParams } from 'react-router-dom';
 
-import SerieCardPlay from "../components/SerieCardPlay";
+import CardPlay from '../components/CardPlay/CardPlay';
 import {
-  MoviePageStyled,
-  MovieDescriptionStyled,
-  MovieContainerStyled,
-  CardStyled,
-  CardContainerStyled,
-  TitleStyled,
   AssetsStyled,
   BackdropContainerStyled,
   BackdropFilterStyled,
   BackdropStyled,
-  PlayContainer,
-  MoviePlay,
-} from "../style/MovieCardStyle";
+  CardContainerStyled,
+  CardStyled,
+  MovieContainerStyled,
+  MovieDescriptionStyled,
+  MoviePageStyled,
+  TitleStyled,
+} from './CommonStyles/MovieCardStyle';
 
 const imagesURL = import.meta.env.VITE_IMG;
 const moviesURLS = import.meta.env.VITE_API_SS;
@@ -86,11 +84,7 @@ const Serie = () => {
               ></BackdropStyled>
             </BackdropContainerStyled>
 
-            <PlayContainer>
-              <MoviePlay>
-                <SerieCardPlay tv={tv} showLink={false} />
-              </MoviePlay>
-            </PlayContainer>
+            <CardPlay keyId={tv.id} type={'Serie'} />
           </>
         )}
       </MovieContainerStyled>

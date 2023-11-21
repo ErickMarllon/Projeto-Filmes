@@ -1,84 +1,85 @@
-import { useEffect, useState, useRef } from "react";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import MovieCard from "../components/MovieCard";
-import SerieCard from "../components/SerieCard";
+import { useEffect, useRef, useState } from 'react';
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 
+import Card from '../components/Card/Card.jsx';
 import {
-  Title,
-  ContainerNoWrap,
-  ContainNoWrap,
   ButtonLeft,
   ButtonRight,
-} from "../style/FilmesStyle.jsx";
+  ContainNoWrap,
+  ContainerNoWrap,
+  Title,
+} from './CommonStyles/FilmesStyle.jsx';
 const moviesURL = import.meta.env.VITE_API;
 const apiKey = import.meta.env.VITE_API_KEY;
 const moviesURL_S = import.meta.env.VITE_API_SS;
 
 const Home = () => {
   const [topMovies, setTopMovies] = useState([]);
-  const [topMoviess, setTopMoviess] = useState([]);
-  const carousel = useRef("");
-  const carouselS = useRef("");
+  const [topTv, setTopTV] = useState([]);
+  const carousel = {
+    movies: useRef(null),
+    tv: useRef(null),
+  };
   useEffect(() => {
-    const topRatedUrls = `${moviesURL}/discover/movie?${apiKey}`;
-    getTopRatedMovies(topRatedUrls);
+    const getTopRatedMovies = async (url) => {
+      try {
+        const responseMovie = await fetch(
+          `${moviesURL}/discover/movie?${apiKey}`
+        );
+        const responseTv = await fetch(`${moviesURL_S}/discover/tv?${apiKey}`);
 
-    
+        if (!responseMovie.ok || !responseTv.ok) {
+          throw new Error('Failed to fetch');
+        }
+
+        const dataMovie = await responseMovie.json();
+        const dataMovie2 = await responseTv.json();
+
+        setTopMovies(dataMovie.results);
+        setTopTV(dataMovie2.results);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    getTopRatedMovies();
   }, []);
 
-  const getTopRatedMovies = async (url) => {
-    const results = await fetch(url);
-    const data = await results.json();
-    setTopMovies(data.results);
-  };
-
-  useEffect(() => {
-    const topRatedUrls = `${moviesURL_S}/discover/tv?${apiKey}`;
-    getTopRatedMoviess(topRatedUrls);
-  }, []);
-
-  const getTopRatedMoviess = async (url) => {
-    const results = await fetch(url);
-    const data = await results.json();
-    setTopMoviess(data.results);
-  };
-
-  const handleLeftClick = (e) => {
+  const handleLeftClick = (e, ref) => {
     e.preventDefault();
-    carousel.current.scrollLeft -= carousel.current.offsetWidth / 2;
+    ref.current.scrollLeft -= ref.current.offsetWidth / 2;
   };
 
-  const handleRightClick = (e) => {
+  const handleRightClick = (e, ref) => {
     e.preventDefault();
-    carousel.current.scrollLeft += carousel.current.offsetWidth * 2;
-  };
-  const handleLeftClickS = (e) => {
-    e.preventDefault();
-    carouselS.current.scrollLeft -= carouselS.current.offsetWidth / 2;
-  };
-
-  const handleRightClickS = (e) => {
-    e.preventDefault();
-    carouselS.current.scrollLeft += carouselS.current.offsetWidth * 2;
+    ref.current.scrollLeft += ref.current.offsetWidth * 2;
   };
 
   return (
-    <div className="filmes">
+    <div className='filmes'>
       <Title>Filmes</Title>
       <ContainerNoWrap>
-        <ContainNoWrap ref={carousel}>
+        <ContainNoWrap ref={carousel.movies}>
           {topMovies.length > 0 &&
             topMovies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
+              <Card
+                key={movie.id}
+                type={'movie'}
+                keyId={movie.id}
+                image={movie.poster_path}
+                Title={movie.title ? movie.title : movie.name}
+              />
             ))}
           <ButtonLeft
-            className="button-left"
-            onClick={handleLeftClick}
-            alt="Scroll Left"
+            className='button-left'
+            onClick={(e) => handleLeftClick(e, carousel.movies)}
+            alt='Scroll Left'
           >
             <BsChevronLeft />
           </ButtonLeft>
-          <ButtonRight onClick={handleRightClick} alt="Scroll Right">
+          <ButtonRight
+            onClick={(e) => handleRightClick(e, carousel.movies)}
+            alt='Scroll Right'
+          >
             <BsChevronRight />
           </ButtonRight>
         </ContainNoWrap>
@@ -86,17 +87,28 @@ const Home = () => {
 
       <Title>Séries</Title>
       <ContainerNoWrap>
-        <ContainNoWrap ref={carouselS}>
-          {topMoviess.length > 0 &&
-            topMoviess.map((tv) => <SerieCard key={tv.id} tv={tv} />)}
+        <ContainNoWrap ref={carousel.tv}>
+          {topTv.length > 0 &&
+            topTv.map((tv) => (
+              <Card
+                key={tv.id}
+                keyId={tv.id}
+                image={tv.poster_path}
+                Title={tv.title ? tv.title : tv.name}
+                type={'Serie'}
+              />
+            ))}
           <ButtonLeft
-            className="button-left"
-            onClick={handleLeftClickS}
-            alt="Scroll Left"
+            className='button-left'
+            onClick={(e) => handleLeftClick(e, carousel.tv)}
+            alt='Scroll Left'
           >
             <BsChevronLeft />
           </ButtonLeft>
-          <ButtonRight onClick={handleRightClickS} alt="Scroll Right">
+          <ButtonRight
+            onClick={(e) => handleRightClick(e, carousel.tv)}
+            alt='Scroll Right'
+          >
             <BsChevronRight />
           </ButtonRight>
         </ContainNoWrap>
